@@ -1,18 +1,19 @@
-console.log('Connect')
+require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
+const mongoose = require('mongoose')
+const routes = require('./routes/product-routes')
+const { port, dbUri } = require('./config/environment')
+
+
 
 const app = express()
 app.use(morgan('combine'))
 app.use(bodyParser.json())
 app.use(cors())
 
-app.get('/status', (req,res) => {
-    res.send({
-        message:"Hello World"
-    })
-})
-
-app.listen(process.env.PORT || 8081)
+app.use('/api', routes)
+mongoose.connect(dbUri,{ useNewUrlParser: true, useUnifiedTopology: true})
+app.listen(port,() => console.log(`Server is running on port ${port}`))

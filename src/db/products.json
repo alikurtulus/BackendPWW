@@ -20,7 +20,7 @@
     "currency": "GBP"
     },
     "type": "Electrical",
-    "department": "Cookware",
+    "department": "Cookwares",
     "weight": "2370g"
   },
   {
@@ -94,18 +94,6 @@
     "type": "Book",
     "department": "Books and Stationery",
     "weight": "220g"
-  },
-  {
-    "id": "ASC-19-RUN",
-    "name": "Asics Gel-Nimbus 19",
-    "description": "Asics Gel-Nimbus 19 Running shoes",
-    "price": {
-    "value": 108.5,
-    "currency": "GBP"
-    },
-    "type": "Running",
-    "department": "Shoes",
-    "weight": "150g"
   },
   {
     "id": "Happy-Mug",

@@ -1,0 +1,8 @@
+  // We extends some properties from Error class 
+class HttpError extends Error {                                               
+    constructor(message,errorCode){
+      super(message)
+      this.code = errorCode
+    }
+  }
+  module.exports = HttpError
