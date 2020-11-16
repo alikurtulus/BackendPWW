@@ -10,12 +10,12 @@ const indexRoute =  async (req, res, next) => {
         const error = new HttpError('Something went wrong',500)
         return next(error)
     }
-    if(!products){
+    if( !products ){
         const error = new HttpError('Could not find any products',404)
         return next(error)
     }
-      res.status(200).json({products:products.map(product => product.toObject({getters:true}))})
-
+    res.status(200).json({products:products.map(product => product.toObject({getters:true}))})
+  
 }
 const showRoute = async (req,res,next) => {
 
@@ -30,14 +30,13 @@ const showRoute = async (req,res,next) => {
         res.status(200).json(selectedProduct)
     }
     catch(err){
-        const error = new HttpError('Something went wrong', 404)
+        const error = new HttpError('Something went wrong', 500)
         return next(error)
     }
-
-
 }
 const searchRoute =  async (req, res, next) => {
     try{
+        // check  query about department 
         const department = req.query.department ? {department:req.query.department} : {}
         const searchKeyWord = req.query.searchKeyWord ? {
             name:{
@@ -56,7 +55,10 @@ const searchRoute =  async (req, res, next) => {
         const products = await Product.find( {...department, ...searchKeyWord, ...type} ).sort(
             sortOrder
         );
-
+        if(products.length === 0 ){
+            const error = new HttpError('Could not find any results', 404)
+            return next(error)
+        }
         res.status(200).send(products);
     }
     catch(err){
@@ -73,10 +75,11 @@ const departmentRoute = async (req, res, next) => {
             res.status(200).send(departments)
         }
         else{
-            const error = new HttpError('Something went wrong', 500)
+            const error = new HttpError('Could not find any results', 404)
             return next(error)
         }
-    } catch (err) {
+    }
+    catch (err) {
         console.log(err)
         const error = new HttpError('Something went wrong', 500)
         return next(error)
@@ -90,7 +93,7 @@ const typeRoute = async (req, res, next) => {
             res.status(200).send(allTypes)
         }
         else{
-            const error = new HttpError('Something went wrong', 500)
+            const error = new HttpError('Could not find any results', 404)
             return next(error)
         }
     } catch (err) {

@@ -41,6 +41,28 @@ describe("Products", () => {
                     done();
                 });
         });
+        // Test to filtered products record
+          it("should get  products record", (done) => {
+            chai.request(process.env.baseURL)
+                .get(`/search`)
+                .query({department: 'Entertainment'}) 
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('array');
+                    done();
+                });
+        });
+          // Test to filtered products record
+          it("should get  products record", (done) => {
+            chai.request(process.env.baseURL)
+                .get(`/search`)
+                .query({searchKeyWord: 'as',price:'descending', department: 'Shoes'}) 
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('array');
+                    done();
+                });
+        });
           // Test to get departments record
         it("should get all  departments record", (done) => {
             chai.request(process.env.baseURL)
