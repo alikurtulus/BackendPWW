@@ -7,7 +7,6 @@ const mongoose = require('mongoose')
 const routes = require('./routes/product-routes')
 const { port, dbUri } = require('./config/environment')
 
-
 const app = express()
 app.use(morgan('combine'))
 app.use(bodyParser.json())
@@ -15,5 +14,8 @@ app.use(cors())
 
 app.use('/api', routes)
 mongoose.connect(dbUri,{ useNewUrlParser: true, useUnifiedTopology: true})
+if(process.env.NODE_ENV === 'production'){
+    
+}
 app.listen(port,() => console.log(`Server is running on port ${port}`))
 module.exports = app

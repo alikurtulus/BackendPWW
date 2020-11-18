@@ -37,7 +37,7 @@ describe("Products", () => {
                 .query({type: 'Electrical', searchKeyWord:'a', price:'descending'}) 
                 .end((err, res) => {
                     res.should.have.status(200);
-                    res.body.should.be.a('array');
+                    res.body.should.be.a('object');
                     done();
                 });
         });
@@ -48,7 +48,7 @@ describe("Products", () => {
                 .query({department: 'Entertainment'}) 
                 .end((err, res) => {
                     res.should.have.status(200);
-                    res.body.should.be.a('array');
+                    res.body.should.be.a('object');
                     done();
                 });
         });
@@ -59,7 +59,7 @@ describe("Products", () => {
                 .query({searchKeyWord: 'as',price:'descending', department: 'Shoes'}) 
                 .end((err, res) => {
                     res.should.have.status(200);
-                    res.body.should.be.a('array');
+                    res.body.should.be.a('object');
                     done();
                 });
         });

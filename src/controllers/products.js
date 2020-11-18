@@ -44,22 +44,26 @@ const searchRoute =  async (req, res, next) => {
                 $options:'i'
             }
         } : {}
-
+        
+        // check query about price
         const sortOrder = req.query.price
         ? req.query.price === 'descending'
             ? {price:-1}
             : {price: 1}
             : {id: -1};
 
+        //check query about type
         const type = req.query.type ? {type:req.query.type} : {}
         const products = await Product.find( {...department, ...searchKeyWord, ...type} ).sort(
             sortOrder
-        );
-        if(products.length === 0 ){
+        ).exec()
+
+        //if products do not exist
+        if( !products ){
             const error = new HttpError('Could not find any results', 404)
             return next(error)
         }
-        res.status(200).send(products);
+        res.status(200).json({products:products.map(product => product.toObject({getters:true}))});
     }
     catch(err){
         console.log(err)
